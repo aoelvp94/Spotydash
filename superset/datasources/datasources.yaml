@@ -1,0 +1,121 @@
+- columns:
+  - column_name: label
+    type: BIGINT
+  - column_name: popularity
+    type: BIGINT
+  - column_name: followers
+    type: BIGINT
+  - column_name: name
+    type: TEXT
+  - column_name: id
+    type: TEXT
+  - column_name: genre
+    type: TEXT
+  - column_name: url
+    type: TEXT
+  metrics:
+  - expression: COUNT(*)
+    metric_name: count
+    metric_type: count
+    verbose_name: COUNT(*)
+  schema: public
+  table_name: Artist
+- columns:
+  - column_name: danceability
+    type: DOUBLE PRECISION
+  - column_name: acousticness
+    type: DOUBLE PRECISION
+  - column_name: valence
+    type: DOUBLE PRECISION
+  - column_name: instrumentalness
+    type: DOUBLE PRECISION
+  - column_name: speechiness
+    type: DOUBLE PRECISION
+  - column_name: loudness
+    type: DOUBLE PRECISION
+  - column_name: energy
+    type: DOUBLE PRECISION
+  - column_name: liveness
+    type: DOUBLE PRECISION
+  - column_name: tempo
+    type: DOUBLE PRECISION
+  - column_name: name
+    type: VARCHAR(255)
+  - column_name: artist
+    type: VARCHAR(255)
+  - column_name: id
+    type: VARCHAR(255)
+  - column_name: uri
+    type: VARCHAR(255)
+  - column_name: duration_ms
+    type: BIGINT
+  - column_name: time_signature
+    type: BIGINT
+  - column_name: mode
+    type: BIGINT
+  - column_name: key
+    type: BIGINT
+  metrics:
+  - expression: COUNT(*)
+    metric_name: count
+    metric_type: count
+    verbose_name: COUNT(*)
+  schema: public
+  table_name: Song
+- columns:
+  - column_name: avg
+    type: FLOAT
+  - column_name: artist
+    type: STRING
+  metrics:
+  - expression: count(*)
+    metric_name: count
+  schema: public
+  sql: '-- Note: Unless you save your query, these tabs will NOT persist if you clear
+    your cookies or change browsers.
+
+
+    SELECT artist, AVG(energy) AS avg_energy FROM "Song" GROUP BY artist ORDER BY
+    avg DESC'
+  table_name: AVG_Energy_by_Artist
+- columns:
+  - column_name: avg_energy
+    type: FLOAT
+  - column_name: artist
+    type: STRING
+  metrics:
+  - expression: count(*)
+    metric_name: count
+  schema: public
+  sql: "-- Note: Unless you save your query, these tabs will NOT persist if you clear\
+    \ your cookies or change browsers.\n\nSELECT artist, AVG(energy) AS avg_energy\
+    \ \nFROM \"Song\" \nGROUP BY artist \nORDER BY avg_energy DESC"
+  table_name: AVG_Energy_Artists
+- columns:
+  - column_name: label
+    type: INT
+  - column_name: avg_followers
+  metrics:
+  - expression: count(*)
+    metric_name: count
+  schema: public
+  sql: '-- Note: Unless you save your query, these tabs will NOT persist if you clear
+    your cookies or change browsers.
+
+
+    SELECT label, AVG(followers) as avg_followers from "Artist" GROUP BY label'
+  table_name: AVG_followers_Artists
+- columns:
+  - column_name: label
+    type: INT
+  - column_name: avg_popularity
+  metrics:
+  - expression: count(*)
+    metric_name: count
+  schema: public
+  sql: '-- Note: Unless you save your query, these tabs will NOT persist if you clear
+    your cookies or change browsers.
+
+
+    SELECT label, AVG(popularity) as avg_popularity from "Artist" GROUP BY label'
+  table_name: AVG_popularity_Artist

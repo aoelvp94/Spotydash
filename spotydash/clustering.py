@@ -21,6 +21,19 @@ from spotydash.plot import generate_scatter_plot
 
 
 def fit_clustering(df: pd.DataFrame):
+    """ Run a clustering algorithm and log metrics/artifacts/params/model.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Dataframe to process clustering.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        Df with results.
+
+    """
     logging.info("Going to process clustering..")
     X = df[["followers", "popularity"]]
     s = MinMaxScaler()

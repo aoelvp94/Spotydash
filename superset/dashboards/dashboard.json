@@ -1,0 +1,336 @@
+{
+    "dashboards": [
+        {
+            "__Dashboard__": {
+                "css": "",
+                "dashboard_title": "Spotydash",
+                "description": null,
+                "json_metadata": "{\"timed_refresh_immune_slices\": [], \"expanded_slices\": {}, \"refresh_frequency\": 0, \"default_filters\": \"{}\", \"color_scheme\": null, \"remote_id\": 1}",
+                "position_json": "{\"CHART-IoCthYUkF4\":{\"children\":[],\"id\":\"CHART-IoCthYUkF4\",\"meta\":{\"chartId\":1,\"height\":80,\"sliceName\":\"Promedio de energia por Artista\",\"uuid\":\"5a770960-edaf-4e8f-acc2-acadf30afd75\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-OgonBZM-L0\"],\"type\":\"CHART\"},\"CHART-UwOwdO7Jnr\":{\"children\":[],\"id\":\"CHART-UwOwdO7Jnr\",\"meta\":{\"chartId\":2,\"height\":49,\"sliceName\":\"Pie chart del promedio de Seguidores por cluster\",\"uuid\":\"22645861-488c-4b5c-8efe-9921132f91f9\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-RETt6CZXD\"],\"type\":\"CHART\"},\"CHART-v9TBHEi8uw\":{\"children\":[],\"id\":\"CHART-v9TBHEi8uw\",\"meta\":{\"chartId\":3,\"height\":49,\"sliceName\":\"Promedio de popularidad por Cluster\",\"uuid\":\"d66568d9-044e-4c06-b49b-729376ba769c\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-RETt6CZXD\"],\"type\":\"CHART\"},\"DASHBOARD_VERSION_KEY\":\"v2\",\"GRID_ID\":{\"children\":[\"ROW-OgonBZM-L0\",\"ROW-RETt6CZXD\"],\"id\":\"GRID_ID\",\"parents\":[\"ROOT_ID\"],\"type\":\"GRID\"},\"HEADER_ID\":{\"id\":\"HEADER_ID\",\"meta\":{\"text\":\"Spotydash\"},\"type\":\"HEADER\"},\"MARKDOWN-wPlEhCpPM\":{\"children\":[],\"id\":\"MARKDOWN-wPlEhCpPM\",\"meta\":{\"code\":\"# Gr\\u00e1fico de barras analizando m\\u00e9tricas por cluster\\nEs posible apreciar que el cluster 2 tiene mayor promedio de seguidores que el resto de los clusters, lo mismo podemos concluir con la popularidad, pero en menor proporci\\u00f3n.\",\"height\":51,\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-RETt6CZXD\"],\"type\":\"MARKDOWN\"},\"ROOT_ID\":{\"children\":[\"GRID_ID\"],\"id\":\"ROOT_ID\",\"type\":\"ROOT\"},\"ROW-OgonBZM-L0\":{\"children\":[\"CHART-IoCthYUkF4\"],\"id\":\"ROW-OgonBZM-L0\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-RETt6CZXD\":{\"children\":[\"MARKDOWN-wPlEhCpPM\",\"CHART-UwOwdO7Jnr\",\"CHART-v9TBHEi8uw\"],\"id\":\"ROW-RETt6CZXD\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"}}",
+                "slices": [
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.AVG_Energy_Artists",
+                            "datasource_type": "table",
+                            "id": 1,
+                            "params": "{\"adhoc_filters\": [], \"bar_stacked\": false, \"bottom_margin\": \"auto\", \"color_scheme\": \"d3Category10\", \"columns\": [], \"datasource\": \"4__table\", \"groupby\": [\"artist\"], \"label_colors\": {}, \"metrics\": [{\"aggregate\": \"AVG\", \"column\": {\"column_name\": \"avg_energy\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 29, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"FLOAT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"AVG(avg_energy)\", \"optionName\": \"metric_o3mm1l7x0ag_xw9s0as7n2d\", \"sqlExpression\": null}], \"order_bars\": false, \"order_desc\": false, \"row_limit\": 10000, \"show_bar_value\": false, \"show_legend\": true, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"dist_bar\", \"x_axis_label\": \"Artist\", \"x_ticks_layout\": \"auto\", \"y_axis_bounds\": [null, null], \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"Energy\", \"remote_id\": 1, \"datasource_name\": \"AVG_Energy_Artists\", \"schema\": \"public\", \"database_name\": \"spotipy\"}",
+                            "slice_name": "Promedio de energia por Artista",
+                            "viz_type": "dist_bar"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.AVG_followers_Artists",
+                            "datasource_type": "table",
+                            "id": 2,
+                            "params": "{\"adhoc_filters\": [], \"color_scheme\": \"d3Category20c\", \"datasource\": \"5__table\", \"groupby\": [\"label\"], \"innerRadius\": 56, \"label_line\": true, \"label_type\": \"key\", \"labels_outside\": true, \"legendOrientation\": \"top\", \"legendType\": \"scroll\", \"metric\": {\"aggregate\": \"AVG\", \"column\": {\"column_name\": \"avg_followers\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 31, \"is_dttm\": false, \"python_date_format\": null, \"type\": null, \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"AVG(avg_followers)\", \"optionName\": \"metric_okgxpq2mkri_bml1rpdvcx7\", \"sqlExpression\": null}, \"number_format\": \"SMART_NUMBER\", \"outerRadius\": 73, \"row_limit\": 1000, \"show_labels\": true, \"show_legend\": true, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"pie\", \"remote_id\": 2, \"datasource_name\": \"AVG_followers_Artists\", \"schema\": \"public\", \"database_name\": \"spotipy\"}",
+                            "slice_name": "Pie chart del promedio de Seguidores por cluster",
+                            "viz_type": "pie"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.AVG_popularity_Artist",
+                            "datasource_type": "table",
+                            "id": 3,
+                            "params": "{\"adhoc_filters\": [], \"color_scheme\": \"supersetColors\", \"datasource\": \"6__table\", \"groupby\": [\"label\"], \"innerRadius\": 30, \"label_line\": true, \"label_type\": \"key\", \"labels_outside\": true, \"legendOrientation\": \"top\", \"legendType\": \"scroll\", \"metric\": {\"aggregate\": \"AVG\", \"column\": {\"column_name\": \"avg_popularity\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 33, \"is_dttm\": false, \"python_date_format\": null, \"type\": null, \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"AVG(avg_popularity)\", \"optionName\": \"metric_02cv20zyxvkx_pw475nfxlee\", \"sqlExpression\": null}, \"number_format\": \"SMART_NUMBER\", \"outerRadius\": 65, \"row_limit\": 1000, \"show_labels\": true, \"show_legend\": true, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"pie\", \"remote_id\": 3, \"datasource_name\": \"AVG_popularity_Artist\", \"schema\": \"public\", \"database_name\": \"spotipy\"}",
+                            "slice_name": "Promedio de popularidad por Cluster",
+                            "viz_type": "pie"
+                        }
+                    }
+                ],
+                "slug": null
+            }
+        }
+    ],
+    "datasources": [
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:10:23"
+                            },
+                            "column_name": "label",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:10:23"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 32,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 6,
+                            "type": "INT",
+                            "uuid": "a36afc8e-dc32-4b56-8857-a517f62e05c3",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:10:23"
+                            },
+                            "column_name": "avg_popularity",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:10:23"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 33,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 6,
+                            "type": null,
+                            "uuid": "960e126e-f2cd-486e-ad07-f3f86b8c2b6d",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 1,
+                "default_endpoint": null,
+                "description": null,
+                "extra": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": null,
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:10:23"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:10:23"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "count(*)",
+                            "extra": null,
+                            "id": 6,
+                            "metric_name": "count",
+                            "metric_type": null,
+                            "table_id": 6,
+                            "uuid": "755cd850-c88f-4615-bd15-7da6a892fbd2",
+                            "verbose_name": null,
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 6, \"database_name\": \"spotipy\"}",
+                "schema": "public",
+                "sql": "-- Note: Unless you save your query, these tabs will NOT persist if you clear your cookies or change browsers.\n\nSELECT label, AVG(popularity) as avg_popularity from \"Artist\" GROUP BY label",
+                "table_name": "AVG_popularity_Artist",
+                "template_params": null
+            }
+        },
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:03:11"
+                            },
+                            "column_name": "artist",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:03:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 28,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 4,
+                            "type": "STRING",
+                            "uuid": "84dbd850-f72d-4f9d-9dd9-5caaf60f9108",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:03:11"
+                            },
+                            "column_name": "avg_energy",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:03:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 29,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 4,
+                            "type": "FLOAT",
+                            "uuid": "5d24b03e-fa37-4441-8e6d-48a8f141bd4b",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 1,
+                "default_endpoint": null,
+                "description": null,
+                "extra": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": null,
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:03:11"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:03:11"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "count(*)",
+                            "extra": null,
+                            "id": 4,
+                            "metric_name": "count",
+                            "metric_type": null,
+                            "table_id": 4,
+                            "uuid": "60cddb79-1cc3-42e2-b087-8c615421f871",
+                            "verbose_name": null,
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 4, \"database_name\": \"spotipy\"}",
+                "schema": "public",
+                "sql": "-- Note: Unless you save your query, these tabs will NOT persist if you clear your cookies or change browsers.\n\nSELECT artist, AVG(energy) AS avg_energy \nFROM \"Song\" \nGROUP BY artist \nORDER BY avg_energy DESC",
+                "table_name": "AVG_Energy_Artists",
+                "template_params": null
+            }
+        },
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:07:24"
+                            },
+                            "column_name": "label",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:07:24"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 30,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 5,
+                            "type": "INT",
+                            "uuid": "d7019e46-7cb9-4d9c-96da-44f63bc4fe74",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:07:24"
+                            },
+                            "column_name": "avg_followers",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:07:24"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 31,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 5,
+                            "type": null,
+                            "uuid": "70a7b962-bf95-44da-b127-a3bc97e1a665",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 1,
+                "default_endpoint": null,
+                "description": null,
+                "extra": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": null,
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-05-30T21:07:24"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-05-30T21:07:24"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "count(*)",
+                            "extra": null,
+                            "id": 5,
+                            "metric_name": "count",
+                            "metric_type": null,
+                            "table_id": 5,
+                            "uuid": "f888861a-093e-4cb7-bc41-0dca93cfeed8",
+                            "verbose_name": null,
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 5, \"database_name\": \"spotipy\"}",
+                "schema": "public",
+                "sql": "-- Note: Unless you save your query, these tabs will NOT persist if you clear your cookies or change browsers.\n\nSELECT label, AVG(followers) as avg_followers from \"Artist\" GROUP BY label",
+                "table_name": "AVG_followers_Artists",
+                "template_params": null
+            }
+        }
+    ]
+}

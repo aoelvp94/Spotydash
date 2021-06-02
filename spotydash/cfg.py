@@ -32,7 +32,7 @@ MLFLOW_CFG = {
     "password": config("MLFLOW_POSTGRES_PASSWORD", default="mlflow", cast=str),
     "database": config("MLFLOW_POSTGRES_DB", default="mlflowdb", cast=str),
     "artifact_root": config(
-        "MLFLOW_ARTIFACT_ROOT", default="/telcred/resources/tmp/mlruns/", cast=str
+        "MLFLOW_ARTIFACT_ROOT", default="/spotydash/resources/tmp/mlruns/", cast=str
     ),
     "tracking_user": config("MLFLOW_TRACKING_USER", default="mlflow", cast=str),
     "tracking_password": config("MLFLOW_TRACKING_PASSWORD", default="mlflow", cast=str),
