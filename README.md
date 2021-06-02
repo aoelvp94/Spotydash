@@ -67,7 +67,7 @@ Por favor, mirar el archivo `sample_dot_env` en la carpeta del proyecto.
 # DASHBOARD
 El dashboard está construido con la plataforma de visualización Apache Superset (Para más referenciar sobre cómo configurar un dashboard en 5 minutos usando Google Sheets como fuente de datos ver el siguiente tweet https://twitter.com/AldoEscobarLVP/status/1399163240735821825)
 
-![Superset Screen](/docs/screen_superset.png "Superset Screen")
+![Superset Screen](./docs/screen_superset.png "Superset Screen")
 
 
 # ETLS - AIRFLOW
