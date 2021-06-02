@@ -11,7 +11,6 @@ __pycache__/
 # C extensions
 *.so
 *.pyc
-*.png
 .cache
 
 logs/
