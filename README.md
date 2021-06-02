@@ -20,7 +20,12 @@ https://developer.spotify.com/dashboard/login
 - Playlist: https://developer.spotify.com/documentation/web-api/reference/#category-playlists
 
 # Extracción de datos
-Utilizaremos la API de Spotify para extraer datos desde nuestra cuenta personal.
+Utilizaremos la API de Spotify para extraer datos desde nuestra cuenta personal. Entre los datos que podemos obtener de Spotify tenemos:
+* Artista
+* Track
+* Ultimos tracks reproducidos
+* Playlists dado un user
+* Atributos de sonido
 
 # Transformación de datos
 Realizaremos procesos para extraer algunos campos a partir de los datos obtenidos desde la API de Spotify. Los mismos están definidos en el script `transform.py`.
@@ -71,7 +76,7 @@ El dashboard está construido con la plataforma de visualización Apache Superse
 
 
 # ETLS - AIRFLOW
-Este proyecto tiene 4 DAGs:
+Este proyecto tiene 2 DAGs:
 
 * songs_etl: Contiene un ETL para los datos de las canciones.
 * artists_etfl: Contiene un ETFL para datos de artistas.
