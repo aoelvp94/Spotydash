@@ -11,11 +11,8 @@ __pycache__/
 # C extensions
 *.so
 *.pyc
-*.csv
 *.png
 .cache
-*.pickle
-*.pkl
 
 logs/
 __pycache__/
