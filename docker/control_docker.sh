@@ -13,6 +13,12 @@ else
 fi
 
 
+if [[ -n "$2" ]]; then
+    artifact="$2"
+fi
+
+
+
 function pg_connect {
     pgcli -h localhost -p "$POSTGRES_PORT" -U "$POSTGRES_USER" -d "$POSTGRES_DB"
 }
@@ -41,6 +47,30 @@ function superset_ls {
     docker exec -it "$COMPOSE_PROJECT_NAME"_superset_1 flask fab list-users
 }
 
+# Export all dashboards/datasources defined in Superset service. It requires an argument to export that.
+function superset_export () {
+    case "$artifact" in
+        *"dashboards"*)
+            echo 'Creating directory for dashboards..'
+            mkdir -p "$SUPERSET_DASHBOARDS_PATH"
+            echo 'Exporting dashboards..'
+            docker exec "$COMPOSE_PROJECT_NAME"_superset_1 superset export_dashboards -f "$SUPERSET_DASHBOARDS_PATH"/dashboard.json
+            echo "All the dashboards in Superset were exported."
+            ;;
+        *"datasources"*)
+            echo 'Creating directory for datasources..'
+            mkdir -p "$SUPERSET_DATASOURCES_PATH"
+            echo 'Exporting datasources..'
+            docker exec "$COMPOSE_PROJECT_NAME"_superset_1 superset export_datasources -f "$SUPERSET_DATASOURCES_PATH"/datasources.yaml
+            echo "All the datasources in Superset were exported."
+            ;;
+        *)
+            printf "ERROR: Missing command. Available commands: \n  dashboards, datasources \n"
+            exit 1
+            ;;
+    esac
+}
+
 
 case "$1" in
     pg_connect)
@@ -58,8 +88,11 @@ case "$1" in
     superset_ls)
         superset_ls
         ;;
+    superset_export)
+        superset_export
+        ;;
     *)
-        printf "ERROR: Missing command. Available commands: \n  pg_connect, exec_base, airflow_ls, superset_create_admin, superset_ls\n"
+        printf "ERROR: Missing command. Available commands: \n  pg_connect, exec_base, airflow_ls, superset_create_admin, superset_ls, superset_export\n"
         exit 1
         ;;
 esac
