@@ -36,7 +36,7 @@ services:
     build:
       context: ../
       dockerfile: docker/Dockerfile
-    command: bash -c  "poetry run python spotydash/models.py"
+    #  command: bash -c  "poetry run python spotydash/models.py"
     depends_on:
         - postgres-db
     volumes:
