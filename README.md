@@ -73,7 +73,7 @@ El dashboard está construido con la plataforma de visualización Apache Superse
 # ETLS - AIRFLOW
 Este proyecto tiene 4 DAGs:
 
-* songs_etl: COntiene un ETL para los datos de las canciones.
+* songs_etl: Contiene un ETL para los datos de las canciones.
 * artists_etfl: Contiene un ETFL para datos de artistas.
 
 ## SOBRE EL ARCHIVO .CACHE
