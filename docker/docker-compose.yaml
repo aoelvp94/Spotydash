@@ -1,0 +1,242 @@
+version: '3'
+services:
+
+  # POSTGRES DB
+  postgres-db:
+    image: postgres:13.2
+    environment:
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+      POSTGRES_MULTIPLE_DATABASES: "${POSTGRES_DB},${AIRFLOW_POSTGRES_DB},${MLFLOW_POSTGRES_DB},${SUPERSET_POSTGRES_DB}"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: UTC
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./pg-init-scripts:/docker-entrypoint-initdb.d
+    expose:
+      - ${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    networks:
+      - spotydash-network
+    restart: always
+
+  # waitfor-postgres-db
+  waitfor-postgres-db:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - postgres-db
+    command: postgres-db:5432
+    networks:
+      - spotydash-network
+
+
+  base:
+    image: spotydash_base
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    command: bash -c  "poetry run python spotydash/models.py"
+    depends_on:
+        - postgres-db
+    volumes:
+        - ../:/spotydash/
+        - type: bind
+          source: ../.env
+          target: /spotydash/.env
+    networks:
+        - spotydash-network
+
+  # AIRFLOW WEBSERVER
+  airflow-webserver:
+    image: spotydash_base
+    restart: always
+    depends_on:
+      - waitfor-postgres-db
+    environment:
+      AIRFLOW__CORE__BASE_LOG_FOLDER: ${AIRFLOW_LOG_FOLDER}
+      AIRFLOW__CORE__DAGS_FOLDER: ${AIRFLOW_DAG_FOLDER}
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: 0
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${COMPOSE_PROJECT_NAME}_${POSTGRES_HOST}_1:5432/${AIRFLOW_POSTGRES_DB}"
+      AIRFLOW__WEBSERVER__WEB_SERVER_PORT: ${AIRFLOW_PORT}
+      AIRFLOW_CREATE_USER_CONN: ${AIRFLOW_CREATE_USER_CONN}
+      AIRFLOW_EMAIL: ${AIRFLOW_EMAIL}
+      AIRFLOW_FIRST: ${AIRFLOW_FIRST}
+      AIRFLOW_LAST: ${AIRFLOW_LAST}
+      AIRFLOW_USER: ${AIRFLOW_USER}
+      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD}
+      AIRFLOW_ROLE: ${AIRFLOW_ROLE}
+      TZ: UTC
+    ports:
+      - ${AIRFLOW_PORT}:${AIRFLOW_PORT}
+    entrypoint: bash /spotydash/docker/entrypoints/start_airflow_webserver.sh
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - ../spotydash/dags/logs/:${AIRFLOW_LOG_FOLDER}
+      - ../spotydash/dags/:${AIRFLOW_DAG_FOLDER}
+      - ../:/spotydash/
+      - type: bind
+        source: ../.env
+        target: /spotydash/.env
+    working_dir: /spotydash/
+    networks:
+      - spotydash-network
+
+  # WAITFOR-WEBSERVER SERVICE
+  waitfor-webserver:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - airflow-webserver
+    command: airflow-webserver:${AIRFLOW_PORT}
+    networks:
+      - spotydash-network
+
+  # AIRFLOW SCHEDULER
+  airflow-scheduler:
+    image: spotydash_base
+    restart: always
+    depends_on:
+      - waitfor-webserver
+    environment:
+      AIRFLOW__CORE__BASE_LOG_FOLDER: ${AIRFLOW_LOG_FOLDER}
+      AIRFLOW__CORE__DAGS_FOLDER: ${AIRFLOW_DAG_FOLDER}
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: 0
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${COMPOSE_PROJECT_NAME}_${POSTGRES_HOST}_1:5432/${AIRFLOW_POSTGRES_DB}"
+      TZ: UTC
+    command: poetry run airflow scheduler
+    volumes:
+      - ../spotydash/dags/logs/:${AIRFLOW_LOG_FOLDER}
+      - ../spotydash/dags/:${AIRFLOW_DAG_FOLDER}
+      - ../:/spotydash/
+      - type: bind
+        source: ../.env
+        target: /spotydash/.env
+    working_dir: /spotydash/
+    networks:
+      - spotydash-network
+
+  # MLFLOW SERVER
+  mlflow-server:
+    image: spotydash_base
+    ports:
+      - ${MLFLOW_SERVER_PORT}:${MLFLOW_SERVER_PORT}
+    environment:
+      DB_URI: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${COMPOSE_PROJECT_NAME}_${POSTGRES_HOST}_1:5432/${MLFLOW_POSTGRES_DB}
+      MLFLOW_ARTIFACT_ROOT: ${MLFLOW_ARTIFACT_ROOT}
+      MLFLOW_TRACKING_USERNAME: ${MLFLOW_TRACKING_USER}
+      MLFLOW_TRACKING_PASSWORD: ${MLFLOW_TRACKING_PASSWORD}
+      MLFLOW_SERVER_HOST: ${MLFLOW_SERVER_HOST}
+      MLFLOW_SERVER_PORT: ${MLFLOW_SERVER_PORT}
+      TZ: UTC
+    restart: always
+    depends_on:
+      - waitfor-postgres-db
+    volumes:
+      - type: bind
+        source: ../
+        target: /spotydash/
+      - type: bind
+        source: ../.env
+        target: /spotydash/.env
+    entrypoint: bash /spotydash/docker/entrypoints/start_mlflow_server.sh
+    networks:
+      - spotydash-network
+
+  # MLFLOW UI
+  mlflow-ui:
+    image: spotydash_base
+    ports:
+      - ${MLFLOW_UI_PORT}:${MLFLOW_UI_PORT}
+    environment:
+      DB_URI: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${COMPOSE_PROJECT_NAME}_${POSTGRES_HOST}_1:5432/${MLFLOW_POSTGRES_DB}
+      MLFLOW_ARTIFACT_ROOT: ${MLFLOW_ARTIFACT_ROOT}
+      MLFLOW_TRACKING_USERNAME: ${MLFLOW_TRACKING_USER}
+      MLFLOW_TRACKING_PASSWORD: ${MLFLOW_TRACKING_PASSWORD}
+      MLFLOW_UI_HOST: ${MLFLOW_UI_HOST}
+      MLFLOW_UI_PORT: ${MLFLOW_UI_PORT}
+      TZ: UTC
+    restart: always
+    depends_on:
+      - mlflow-server
+    volumes:
+      - type: bind
+        source: ../
+        target: /spotydash/
+      - type: bind
+        source: ../.env
+        target: /spotydash/.env
+    entrypoint: bash /spotydash/docker/entrypoints/start_mlflow_ui.sh
+    networks:
+      - spotydash-network
+
+  # SUPERSET
+  superset:
+    image: amancevice/superset
+    entrypoint: bash /docker/entrypoints/start_superset.sh
+    restart: always
+    depends_on:
+      - postgres-db
+      - redis
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
+      FLASK_APP: ${FLASK_APP}
+      SUPERSET_CREATE_USER: ${SUPERSET_CREATE_USER}
+      SUPERSET_EMAIL: ${SUPERSET_EMAIL}
+      SUPERSET_FIRSTNAME: ${SUPERSET_FIRSTNAME}
+      SUPERSET_LASTNAME: ${SUPERSET_LASTNAME}
+      SUPERSET_USER: ${SUPERSET_USER}
+      SUPERSET_PASSWORD: ${SUPERSET_PASSWORD}
+      SUPERSET_PORT: ${SUPERSET_PORT}
+      SUPERSET_POSTGRES_DB: ${SUPERSET_POSTGRES_DB}
+      SUPERSET_REDIS_PORT: ${SUPERSET_REDIS_PORT}
+    ports:
+      - ${SUPERSET_PORT}:${SUPERSET_PORT}
+    volumes:
+      - type: bind
+        source: ./
+        target: /docker
+      - type: bind
+        source: ../superset
+        target: /superset
+      - type: bind
+        source: ../superset/superset_config.py
+        target: /etc/superset/superset_config.py
+    networks:
+      - spotydash-network
+
+  # REDIS
+  redis:
+    image: redis
+    restart: always
+
+  # WAITFOR-SUPERSET-SERVICE
+  waitfor-superset:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - superset
+    command: superset:${SUPERSET_PORT}
+    networks:
+      - spotydash-network
+
+# VOLUMES
+volumes:
+  postgres-data:
+
+# NETWORKS
+networks:
+  spotydash-network:
+    ipam:
+      driver: default
+      config:
+          - subnet: ${IP_SUBNET}/16
