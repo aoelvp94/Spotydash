@@ -15,9 +15,9 @@ DB_CONNSTR = config("DB_CONNSTR")
 PG_CFG = {
     "dialect": config("POSTGRES_DIALECT", default="postgres", cast=str),
     "driver": config("POSTGRES_DRIVER", default="psycopg2", cast=str),
-    "username": config("POSTGRES_USER", default="sites", cast=str),
-    "password": config("POSTGRES_PASSWORD", default="sites", cast=str),
-    "host": config("POSTGRES_HOST", default="postgres-postgis-db", cast=str),
+    "username": config("POSTGRES_USER", default="spotydash", cast=str),
+    "password": config("POSTGRES_PASSWORD", default="spotydash", cast=str),
+    "host": config("POSTGRES_HOST", default="postgres-db", cast=str),
     "port": config("POSTGRES_PORT", default=5432, cast=int),
     "database": config("POSTGRES_DB", default="db", cast=str),
     "db_type": config("POSTGRES_DB_TYPE", default="postgres", cast=str),
