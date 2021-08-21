@@ -44,7 +44,7 @@ Nota: Asegurarte de tener bien configurado el archivo `.env` (Mirar más abajo).
 
 Estamos utilizando `docker-compose` para correr este proyecto y `poetry` para crear nuestro propio virtual environment y gestionar nuestras librerías Python.
 
-Primero, tenenemos que buildear la iamgen. Para ello iremos a la carpeta `docker` y correremos el siguiente comando en una consola (ya sea WSL2 o consola Bash):
+Primero, tenenemos que buildear la imagen. Para ello iremos a la carpeta `docker` y correremos el siguiente comando en una consola (ya sea WSL2 o consola Bash):
 
 ```bash
 docker-compose --env-file ../.env build
