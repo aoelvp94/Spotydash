@@ -9,6 +9,7 @@ from sklearn.metrics import (
     davies_bouldin_score,
     silhouette_score,
 )
+
 from sklearn.preprocessing import MinMaxScaler
 
 from spotydash.cfg import KMEANS_PARAMS
